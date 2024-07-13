@@ -12,7 +12,7 @@ folder.
 '''
 
 
-def Create_Directory(directory_path):
+def Create_Directory(directory_path: str):
     if not Path.is_dir(directory_path):
         Path.mkdir(directory_path)
         print(f'{directory_path.name} folder created')
@@ -20,18 +20,18 @@ def Create_Directory(directory_path):
 videos_folder_path = Path.home() / 'Videos'
 
 Create_Directory(videos_folder_path / 'Seasons')
+Create_Directory(videos_folder_path / 'Movies')
 
 seasons_folder_path = videos_folder_path / 'Seasons'
 
 # Example file name matching this regex:
 # Breaking.Bad.S01E01.720p.x264.Bluray.Hindi.English.Esubs.MoviesMod.org.mkv
-# This file will organized into the folder:
-# Seasons -> Breaking Bad -> Season 01 -> Episode 01
+# This file will be organized like this:
+# Seasons -> Breaking Bad -> Season 01 -> Episode 01.mkv
 season_regex = re.compile(r'^(.+)\.(S\d{2})(E\d{2}).*$')
 
 for file in Path.cwd().glob('*.mkv'):
     # Checking to see if the object is a file, not a directory
-    print('File matched')
     if file.is_file():
         match = season_regex.match(file.name)
 
@@ -45,6 +45,6 @@ for file in Path.cwd().glob('*.mkv'):
         Create_Directory(seasons_folder_path / season_name)
         Create_Directory(seasons_folder_path / season_name / season_number)
 
-        shutil.copy(file, str(season_number_directory / (episode_number + '.mkv')))
-
-        print('File copied')
+        if not (season_number_directory / (episode_number + '.mkv')).is_file():
+            shutil.copy(file, str(season_number_directory / (episode_number + '.mkv')))
+            print(f'{str(season_directory.name / season_number_directory.name / (episode_number + '.mkv'))} copied')
