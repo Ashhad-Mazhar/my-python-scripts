@@ -27,7 +27,7 @@ seasons_folder_path = videos_folder_path / 'Seasons'
 # Breaking.Bad.S01E01.720p.x264.Bluray.Hindi.English.Esubs.MoviesMod.org.mkv
 # This file will organized into the folder:
 # Seasons -> Breaking Bad -> Season 01 -> Episode 01
-season_regex = re.compile(r'^([^\.]+\.[^\.]+)\.(S\d{2})(E\d{2}).*$')
+season_regex = re.compile(r'^(.+)\.(S\d{2})(E\d{2}).*$')
 
 for file in Path.cwd().glob('*.mkv'):
     # Checking to see if the object is a file, not a directory
